@@ -205,7 +205,6 @@
                                 <div style="display:flex;align-items:center;">
                                     订阅费用 
                                     <c-input-number 
-                                        v-if="index < 3"
                                         :inputValue.sync="item.mouthPayment"
                                         placeholder="请输入"
                                         :inputStyle="{
@@ -219,12 +218,30 @@
                                         @blur="calculate2"
                                     >
                                     </c-input-number> 
-                                    <span style="padding: 0 12px" v-else>
+                                    <!-- <span style="padding: 0 12px" v-else>
                                         {{ item.mouthPayment ? `${formatThousandNumber(item.mouthPayment)}` : '自动计算订阅费用' }}
-                                    </span>
+                                    </span> -->
                                     元/月
                                 </div>
-                                <div>期末余值 {{item.buyoutsFee ? `${formatThousandNumber(item.buyoutsFee)}` : '-'}}元</div>
+                                <!-- <div>期末余值 {{item.buyoutsFee ? `${formatThousandNumber(item.buyoutsFee)}` : '-'}}元</div> -->
+                                <div>
+                                  期末余值 
+                                  <c-input-number 
+                                      :inputValue.sync="item.buyoutsFee"
+                                      placeholder="请输入"
+                                      :inputStyle="{
+                                          height: '24px',
+                                          lineHeight: '24px',
+                                          width: '110px',
+                                          margin: '0 12px',
+                                          border: '1px solid rgba(115, 115, 115, 0.8)',
+                                          borderRadius: '2px'
+                                      }"
+                                      @blur="calculate2"
+                                  >
+                                  </c-input-number>
+                                  元
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -333,24 +350,27 @@ export default {
         },
 
         handleChooseCity() {
-            if (!this.dialogActiveCity) {
-                this.$message.error('请选择一个城市')
-                return
-            }
+          if (!this.dialogActiveCity) {
+              this.$message.error('请选择一个城市')
+              return
+          }
 
-            this.detail.currentCity = {
+          const defaultSubscribeReq = JSON.parse(JSON.stringify(this.detail.citySubscribeReq[0]))
+
+          this.detail.currentCity = {
+                ...defaultSubscribeReq,
                 cityId: this.dialogActiveCity.id,
                 cityName: this.dialogActiveCity.city,
-                discount: undefined,
-                profit: undefined,
-                residualValueRate: undefined,
+                // discount: undefined,
+                // profit: undefined,
+                // residualValueRate: undefined,
                 firstPeriodRate: 20,
-                deposit: null,
-                distributionBrokerage: null,
-                apportionFeeRecordList: this.detail.calculatorRule === 2 ? this.defaultApportionFeeRecordList : [],
-                typeReqVos: [],
-                purchasingPrice: this.detail.purchasingPrice,
-                transactionPrice: this.detail.transactionPrice,
+                // deposit: null,
+                // distributionBrokerage: null,
+                // apportionFeeRecordList: this.detail.calculatorRule === 2 ? this.defaultApportionFeeRecordList : [],
+                // typeReqVos: [],
+                // purchasingPrice: this.detail.purchasingPrice,
+                // transactionPrice: this.detail.transactionPrice,
             }
 
             this.detail.citySubscribeReq.push(this.detail.currentCity)
@@ -494,7 +514,6 @@ export default {
         },
 
         calculate2() {
-            console.log('calculate2')
             const params = {
                 carTypeYearProductId: this.detail.carTypeYearProductId,
                 residualValue: this.detail.residualValueRate,
@@ -508,6 +527,15 @@ export default {
                 firstCost: this.detail.currentCity.apportionFeeRecordList[0].mouthPayment,
                 secondCost: this.detail.currentCity.apportionFeeRecordList[1].mouthPayment,
                 otherCost: this.detail.currentCity.apportionFeeRecordList[2].mouthPayment,
+                fourCost: this.detail.currentCity.apportionFeeRecordList[3].mouthPayment,
+                fiveCost: this.detail.currentCity.apportionFeeRecordList[4].mouthPayment,
+                sixCost: this.detail.currentCity.apportionFeeRecordList[5].mouthPayment,
+                firstBuyoutsFee: this.detail.currentCity.apportionFeeRecordList[0].buyoutsFee,
+                secondBuyoutsFee: this.detail.currentCity.apportionFeeRecordList[1].buyoutsFee,
+                otherBuyoutsFee: this.detail.currentCity.apportionFeeRecordList[2].buyoutsFee,
+                fourBuyoutsFee: this.detail.currentCity.apportionFeeRecordList[3].buyoutsFee,
+                fiveBuyoutsFee: this.detail.currentCity.apportionFeeRecordList[4].buyoutsFee,
+                sixBuyoutsFee: this.detail.currentCity.apportionFeeRecordList[5].buyoutsFee,
             }
 
             selectDepositAndMonthPayOfApportionRatePlanTwo(params).then(res => {

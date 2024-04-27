@@ -519,12 +519,12 @@ export const TEMPLATE_STATUS = {
 }
 
 export const defaultApportionFeeRecordList = () => [
-    { title: '1-6期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: '' },
-    { title: '7-12期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: '' },
-    { title: '13-18期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: '' },
-    { title: '19-24期', mouthPayment: undefined, input: false, rate: '', buyoutsFee: '' },
-    { title: '25-30期', mouthPayment: undefined, input: false, rate: '', buyoutsFee: '' },
-    { title: '31-36期', mouthPayment: undefined, input: false, rate: '', buyoutsFee: '' },
+    { title: '1-6期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: undefined },
+    { title: '7-12期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: undefined },
+    { title: '13-18期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: undefined },
+    { title: '19-24期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: undefined },
+    { title: '25-30期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: undefined },
+    { title: '31-36期', mouthPayment: undefined, input: true, rate: '', buyoutsFee: undefined },
 ]
 
 // 合伙人申请状态
